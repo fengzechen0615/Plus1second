@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <Button
+        android:id="@+id/buttonchange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="Schedules" />
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.example.francisfeng.plus1second.MonthCalendar
+                android:id="@+id/cal"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+
+                app:mMonthRowL="@drawable/custom_calendar_row_left"
+                app:mMonthRowR="@drawable/custom_calendar_row_right"
+                app:mMonthRowSpac="20dip"
+
+                app:mTextSizeMonth="22sp"
+                app:mTextSizeWeek="17sp"
+                app:mTextSizeDay="17sp"
+                app:mTextSizePre="10sp"
+
+                app:mTextColorMonth="#6E6E6E"
+                app:mTextColorWeek="#aa7a7a"
+                app:mTextColorDay="#A4A4A4"
+                app:mTextColorPreFinish="#5CBB8C"
+                app:mTextColorPreUnFinish="#ff6634"
+                app:mSelectTextColor="#ffffff"
+
+                app:mMonthSpac="8dip"
+                app:mLineSpac="10dip"
+                app:mTextSpac="6dip"
+
+                app:mCurrentBg="#6E6E6E"
+                app:mCurrentBgStrokeWidth="1.5dip"
+                app:mCurrentBgDashPath="@array/MonthCalendar_currentDay_bg_DashPath"
+                app:mSelectBg="#ff6634"
+                app:mSelectRadius="15dip" />
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

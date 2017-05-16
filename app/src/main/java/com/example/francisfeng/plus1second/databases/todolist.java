@@ -3,10 +3,9 @@ package com.example.francisfeng.plus1second.databases;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.francisfeng.plus1second.node.Node;
 import com.example.francisfeng.plus1second.database;
+import com.example.francisfeng.plus1second.node.*;
 
 import java.util.ArrayList;
 import java.util.List;
