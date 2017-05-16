@@ -51,7 +51,7 @@ public class todolist {
     }
     public List<Node> findAll(){
         SQLiteDatabase db =  helper.getWritableDatabase();
-        List<Node> persons = new ArrayList<>();
+        List<Node> todolist = new ArrayList<>();
         Cursor cursor = db.rawQuery("select * from todolist", null);
         while(cursor.moveToNext()){
             String date = cursor.getString(cursor.getColumnIndex("date"));
@@ -59,11 +59,11 @@ public class todolist {
             String course = cursor.getString(cursor.getColumnIndex("course"));
             String thing = cursor.getString(cursor.getColumnIndex("thing"));
             Node n = new Node(date, time, course, thing);
-            persons.add(n);
+            todolist.add(n);
         }
         cursor.close();
         db.close();
-        return persons;
+        return todolist;
     }
 }
 
