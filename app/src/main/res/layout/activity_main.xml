@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.francisfeng.plus1second.MainActivity"
+    tools:context="com.example.francisfeng.plus1second.Month"
     android:id="@+id/main_layout"
     android:background="@drawable/blue"
     >
