@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.example.francisfeng.plus1second.Schedule">
+
+    <item android:id="@+id/exit"
+          android:title="EXIT"
+          android:orderInCategory="2"
+          app:showAsAction="never"/>
+    <item android:id="@+id/add"
+          android:title="ADD COURSE"
+          android:orderInCategory="1"
+          app:showAsAction="never"/>
+</menu>

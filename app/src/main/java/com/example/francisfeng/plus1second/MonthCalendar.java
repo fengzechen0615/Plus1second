@@ -132,12 +132,12 @@ public class MonthCalendar extends View{
         initCompute();
 
     }
-    /**计算相关常量，构造方法中调用*/
+
     private void initCompute(){
         mPaint = new Paint();
         bgPaint = new Paint();
-        mPaint.setAntiAlias(true); //抗锯齿
-        bgPaint.setAntiAlias(true); //抗锯齿
+        mPaint.setAntiAlias(true);
+        bgPaint.setAntiAlias(true);
 
         map = new HashMap<>();
 
@@ -158,13 +158,12 @@ public class MonthCalendar extends View{
 
         //默认当前月份
         String cDateStr = getMonthStr(new Date());
-//        cDateStr = "2015年08月";
         setMonth(cDateStr);
     }
 
     /**设置月份*/
     private void setMonth(String Month){
-        //设置的月份（2017年01月）
+
         month = str2Date(Month);
 
         Calendar calendar = Calendar.getInstance();
@@ -237,7 +236,7 @@ public class MonthCalendar extends View{
         float textLen = FontUtil.getFontlength(mPaint, getMonthStr(month));
         float textStart = (getWidth() - textLen)/ 2;
         canvas.drawText(getMonthStr(month), textStart,
-                mMonthSpac+FontUtil.getFontLeading(mPaint), mPaint);
+                mMonthSpac+ FontUtil.getFontLeading(mPaint), mPaint);
         /*绘制左右箭头*/
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), mMonthRowL);
         int h = bitmap.getHeight();
@@ -259,7 +258,7 @@ public class MonthCalendar extends View{
         mPaint.setTextSize(mTextSizeWeek);
         mPaint.setColor(mTextColorWeek);
         for(int i = 0; i < WEEK_STR.length; i++){
-            int len = (int)FontUtil.getFontlength(mPaint, WEEK_STR[i]);
+            int len = (int) FontUtil.getFontlength(mPaint, WEEK_STR[i]);
             int x = i * columnWidth + (columnWidth - len)/2;
             canvas.drawText(WEEK_STR[i], x, titleHeight + FontUtil.getFontLeading(mPaint), mPaint);
         }
@@ -285,14 +284,6 @@ public class MonthCalendar extends View{
         }
     }
 
-    /**
-     * 绘制某一行的日期
-     * @param canvas
-     * @param top 顶部坐标
-     * @param count 此行需要绘制的日期数量（不一定都是7天）
-     * @param overDay 已经绘制过的日期，从overDay+1开始绘制
-     * @param startIndex 此行第一个日期的星期索引
-     */
     private void drawDayAndPre(Canvas canvas, float top,
                                int count, int overDay, int startIndex){
 //        Log.e(TAG, "总共"+dayOfMonth+"天  有"+lineNum+"行"+ "  已经画了"+overDay+"天,下面绘制："+count+"天");
@@ -345,7 +336,7 @@ public class MonthCalendar extends View{
                 mPaint.setColor(mTextColorDay);
             }
 
-            int len = (int)FontUtil.getFontlength(mPaint, day+"");
+            int len = (int) FontUtil.getFontlength(mPaint, day+"");
             int x = left + (columnWidth - len)/2;
             canvas.drawText(day+"", x, top + mLineSpac + dayTextLeading, mPaint);
 
@@ -365,7 +356,7 @@ public class MonthCalendar extends View{
             }else{
                 mPaint.setColor(mTextColorPreUnFinish);
             }
-            len = (int)FontUtil.getFontlength(mPaint, preStr);
+            len = (int) FontUtil.getFontlength(mPaint, preStr);
             x = left + (columnWidth - len)/2;
             canvas.drawText(preStr, x, topPre + mTextSpac + preTextLeading, mPaint);
         }
@@ -373,12 +364,12 @@ public class MonthCalendar extends View{
 
     /**获取月份标题*/
     private String getMonthStr(Date month){
-        SimpleDateFormat df = new SimpleDateFormat("yyyy年MM月");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/");
         return df.format(month);
     }
     private Date str2Date(String str){
         try {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy年MM月");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/");
             return df.parse(str);
         }catch (Exception e){
             e.printStackTrace();
@@ -509,7 +500,7 @@ public class MonthCalendar extends View{
         invalidate();
         if(listener!=null && eventEnd && responseWhenEnd && lastSelectDay!=selectDay) {
             lastSelectDay = selectDay;
-            listener.onDayClick(selectDay, getMonthStr(month) + selectDay + "日", map.get(selectDay));
+            listener.onDayClick(selectDay, getMonthStr(month) + selectDay, map.get(selectDay));
         }
         responseWhenEnd = !eventEnd;
     }

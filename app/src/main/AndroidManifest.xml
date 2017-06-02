@@ -16,7 +16,10 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.francisfeng.plus1second.Schedule" ></activity>
-        <activity android:name="com.example.francisfeng.plus1second.day"></activity>
+        <activity android:name="com.example.francisfeng.plus1second.AddClass"></activity>
+        <activity android:name="com.example.francisfeng.plus1second.ShowClassActivity"></activity>
+        <activity android:name="com.example.francisfeng.plus1second.day_new"></activity>
+        <activity android:name="com.example.francisfeng.plus1second.AddEvent"></activity>
     </application>
 
 </manifest>
