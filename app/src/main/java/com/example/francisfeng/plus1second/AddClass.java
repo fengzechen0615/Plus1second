@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class AddClass extends Activity {
     private LinearLayout container;
-    private static final String[] weeks = {"星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"};
+    private static final String[] weeks = {"Monday", "Tuesday", "Wednesday", "Thursday", "Fridya", "Saturday", "Sunday"};
     private static final String[] start = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"};
     private static final String[] length = {"1", "2", "3", "4", "5"};
     private ArrayList<LinearLayout> list;
@@ -49,7 +49,7 @@ public class AddClass extends Activity {
             public void onClick(View view) {
                 //读取所有课程细节信息,存入数据库
                 if (list.size() == 0 || list == null) {
-                    Toast.makeText(AddClass.this, "没输入课程信息呢!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddClass.this, "Don't have coures details", Toast.LENGTH_LONG).show();
                 } else {
                     //得到课程信息,储存到数据库
                     saveClassInfo();
@@ -62,7 +62,7 @@ public class AddClass extends Activity {
             @Override
             public void onClick(View view) {
                 if (list.size() == 0 || list == null) {
-                    Toast.makeText(AddClass.this, "没啥可删的了!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddClass.this, "There is nothing to delete!", Toast.LENGTH_LONG).show();
                 } else {
                     LinearLayout temp = list.get(list.size() - 1);
                     list.remove(list.size() - 1);
@@ -110,17 +110,15 @@ public class AddClass extends Activity {
         LinearLayout.LayoutParams layoutParamsMatch = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         layoutParamsMatch.setMargins(0,5,0,0);
 
-        TextView textView1 = createText("从第");
-        TextView textView2 = createText("节 上");
-        TextView textView3 = createText("节课");
-        TextView textView4 = createText("教室");
+        TextView textView1 = createText("From");
+        TextView textView2 = createText("To");
+        TextView textView4 = createText("Classroom");
 
         up.addView(spinner_week, layoutParamsWrap);
         up.addView(textView1, layoutParamsWrap);
         up.addView(spinner_start, layoutParamsWrap);
         up.addView(textView2, layoutParamsWrap);
         up.addView(spinner_length, layoutParamsWrap);
-        up.addView(textView3, layoutParamsWrap);
 
         down.addView(textView4);
         down.addView(editText, layoutParamsMatch);

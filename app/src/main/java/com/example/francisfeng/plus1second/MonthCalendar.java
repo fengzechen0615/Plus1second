@@ -364,12 +364,12 @@ public class MonthCalendar extends View{
 
     /**获取月份标题*/
     private String getMonthStr(Date month){
-        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM");
         return df.format(month);
     }
     private Date str2Date(String str){
         try {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/");
+            SimpleDateFormat df = new SimpleDateFormat("yyyy/MM");
             return df.parse(str);
         }catch (Exception e){
             e.printStackTrace();
@@ -500,7 +500,7 @@ public class MonthCalendar extends View{
         invalidate();
         if(listener!=null && eventEnd && responseWhenEnd && lastSelectDay!=selectDay) {
             lastSelectDay = selectDay;
-            listener.onDayClick(selectDay, getMonthStr(month) + selectDay, map.get(selectDay));
+            listener.onDayClick(selectDay, getMonthStr(month) + "/" +selectDay, map.get(selectDay));
         }
         responseWhenEnd = !eventEnd;
     }
