@@ -18,11 +18,15 @@ import com.example.francisfeng.plus1second_test.R;
 
 import java.util.ArrayList;
 
+/**
+ * Created by francisfeng on 31/05/2017.
+ */
+
 public class AddClass extends Activity {
     private LinearLayout container;
     private static final String[] weeks = {"Monday", "Tuesday", "Wednesday", "Thursday", "Fridya", "Saturday", "Sunday"};
-    private static final String[] start = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"};
-    private static final String[] length = {"1", "2", "3", "4", "5"};
+    private static final String[] start = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+    private static final String[] length = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
     private ArrayList<LinearLayout> list;
     private ClassService classService;
 
@@ -47,11 +51,9 @@ public class AddClass extends Activity {
         submit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //读取所有课程细节信息,存入数据库
                 if (list.size() == 0 || list == null) {
                     Toast.makeText(AddClass.this, "Don't have coures details", Toast.LENGTH_LONG).show();
                 } else {
-                    //得到课程信息,储存到数据库
                     saveClassInfo();
                     AddClass.this.onBackPressed();
                 }
@@ -160,9 +162,9 @@ public class AddClass extends Activity {
 
         for (LinearLayout curLayout : list) {
             LinearLayout up = (LinearLayout)curLayout.getChildAt(0);
-            Spinner spinner = (Spinner)up.getChildAt(0);//取得星期
+            Spinner spinner = (Spinner)up.getChildAt(0);
             int week = spinner.getSelectedItemPosition();
-            spinner = (Spinner)up.getChildAt(2);//取得开始
+            spinner = (Spinner)up.getChildAt(2);
             int start = spinner.getSelectedItemPosition();
             spinner = (Spinner)up.getChildAt(4);
             int length = spinner.getSelectedItemPosition();
@@ -170,12 +172,10 @@ public class AddClass extends Activity {
             LinearLayout down = (LinearLayout)curLayout.getChildAt(1);
             EditText et = (EditText)down.getChildAt(1);
             String classroom = et.getText().toString();
-            //Toast.makeText(AddClass.this, String.valueOf(week), Toast.LENGTH_LONG).show();
             c.setWeek(week);
             c.setStart(start);
-            c.setLength(length + 1);
+            c.setLength(length);
             c.setClassroom(classroom);
-            //储存进数据库
             classService.save(c);
         }
     }

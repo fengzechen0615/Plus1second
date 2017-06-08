@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.francisfeng.plus1second_test.R;
 
@@ -20,15 +21,16 @@ import java.util.ArrayList;
 
 
 /**
- * Created by francisfeng on 02/06/2017.
+ * Created by francisfeng on 31/05/2017.
  */
 
 public class AddEvent extends AppCompatActivity {
+    Month m=new Month();
 
     private LinearLayout container;
     private ArrayList<LinearLayout> list;
     private EventService eventService;
-    public String str;
+    public static String str;
     private static final String[] hour = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11","12","13","14",
             "15","16","17","18","19","20","21","22","23","24"};
     private static final String[] minu = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11","12","13","14",
@@ -48,6 +50,7 @@ public class AddEvent extends AppCompatActivity {
         eventService = new EventService(getBaseContext());
         Button add_detail_btn = (Button) findViewById(R.id.add_detail_btn);
         container = (LinearLayout) findViewById(R.id.container);
+        Toast.makeText(AddEvent.this, "click date："+str, Toast.LENGTH_SHORT).show();
         list = new ArrayList<>();
         add_detail_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +114,7 @@ public class AddEvent extends AppCompatActivity {
         ArrayAdapter<String> adapter_end_hour = new ArrayAdapter<>(this, R.layout.spinner_item, hour1);
         adapter_end_hour.setDropDownViewResource(R.layout.dropdown);
         ArrayAdapter<String> adapter_end_minu = new ArrayAdapter<>(this, R.layout.spinner_item, minu1);
-        adapter_start_minu.setDropDownViewResource(R.layout.dropdown);
+        adapter_end_minu.setDropDownViewResource(R.layout.dropdown);
 //        ArrayAdapter<String> adapter_start = new ArrayAdapter<>(this, R.layout.spinner_item, start);
 //        adapter_start.setDropDownViewResource(R.layout.dropdown);
 
@@ -146,17 +149,17 @@ public class AddEvent extends AppCompatActivity {
         TextView textView4 = createText(":");
 
         up.addView(textView1, layoutParamsWrap);
-        up.addView(spinner_end_hour, layoutParamsWrap);
+        up.addView(spinner_start_hour, layoutParamsWrap);
         up.addView(textView2, layoutParamsWrap);
         up.addView(spinner_start_minu, layoutParamsWrap);
 
         up.addView(textView3, layoutParamsWrap);
-        up.addView(spinner_start_hour, layoutParamsWrap);
+        up.addView(spinner_end_hour, layoutParamsWrap);
         up.addView(textView4,layoutParamsWrap);
         up.addView(spinner_end_minu, layoutParamsWrap);
 
         res.addView(up, layoutParamsWrap);
-        res.addView(down, layoutParamsWrap);
+
 
         list.add(res);
 
@@ -180,7 +183,6 @@ public class AddEvent extends AppCompatActivity {
     }
 
     private void saveEventInfo() {
-//        Class c = new Class();
         Event e = new Event();
 
         EditText editText = (EditText) findViewById(R.id.event_name);
@@ -189,27 +191,23 @@ public class AddEvent extends AppCompatActivity {
         e.setdate(str);
         e.setthings(event_name);
 
-
-
         for (LinearLayout curLayout : list) {
+
             LinearLayout up = (LinearLayout)curLayout.getChildAt(0);
             Spinner spinner = (Spinner)up.getChildAt(1);//取得hour
             int start_hour = spinner.getSelectedItemPosition();
-            spinner = (Spinner)up.getChildAt(2);//取得开始
+            spinner = (Spinner)up.getChildAt(3);
             int start_minu = spinner.getSelectedItemPosition();
-            spinner = (Spinner)up.getChildAt(4);
+            spinner = (Spinner)up.getChildAt(5);
             int end_hour = spinner.getSelectedItemPosition();
-            spinner = (Spinner)up.getChildAt(4);
+            spinner = (Spinner)up.getChildAt(7);
             int end_minu = spinner.getSelectedItemPosition();
 
-//            LinearLayout down = (LinearLayout)curLayout.getChildAt(1);
-//            EditText et = (EditText)down.getChildAt(1);
-//            String classroom = et.getText().toString();
-            //Toast.makeText(AddClass.this, String.valueOf(week), Toast.LENGTH_LONG).show();
             e.setStart_hour(start_hour);
             e.setStart_minu(start_minu);
             e.setEnd_hour(end_hour);
-            e.setStart_minu(end_minu);
+            e.setEnd_minu(end_minu);
+
             //储存进数据库
             eventService.save(e);
         }

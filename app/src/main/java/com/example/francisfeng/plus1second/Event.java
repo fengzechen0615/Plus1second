@@ -1,17 +1,17 @@
 package com.example.francisfeng.plus1second;
 
 /**
- * Created by ray on 2017/6/2.
+ * Created by ray on 2017/5/31.
  */
 
 public class Event {
-    public int id;
+    public String id;
     private String date;
-    private int start_hour;
-    private int end_hour;
-    private int start_minu;
-    private int end_minu;
     private String things;
+    private int start_hour;
+    private int start_minu;
+    private int end_hour;
+    private int end_minu;
 
     public Event(){}
     public Event(String date, String things, int start_hour, int start_minu, int end_hour, int end_minu)
@@ -25,7 +25,7 @@ public class Event {
     }
     public String getdate()
     {
-        return this.date;
+        return date;
     }
 
     public int getstarthour()
@@ -50,7 +50,7 @@ public class Event {
 
     public String getthings()
     {
-        return this.things;
+        return things;
     }
 
     public void setthings(String things) {

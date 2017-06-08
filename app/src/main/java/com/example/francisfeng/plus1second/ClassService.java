@@ -9,6 +9,10 @@ import com.example.francisfeng.plus1second.databases.DatabaseHelper;
 
 import java.util.ArrayList;
 
+/**
+ * Created by francisfeng on 31/05/2017.
+ */
+
 public class ClassService {
     private SQLiteDatabase Rdb;
     private SQLiteDatabase Wdb;

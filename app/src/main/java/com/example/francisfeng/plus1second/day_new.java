@@ -7,18 +7,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.francisfeng.plus1second_test.R;
 
 import java.util.ArrayList;
 
 /**
- * Created by francisfeng on 02/06/2017.
+ * Created by francisfeng on 31/05/2017.
  */
 
 public class day_new extends AppCompatActivity{
@@ -31,7 +34,8 @@ public class day_new extends AppCompatActivity{
     private boolean hasMeasured = false;
     private int color_flag = 1;
     private EventService eventService;
-    public String st;
+    public static String st;
+    private int count=0;
 //    private RelativeLayout relativeLayout = new RelativeLayout(getBaseContext());
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -51,19 +55,19 @@ public class day_new extends AppCompatActivity{
 
         day[0] = (RelativeLayout) findViewById(R.id.event);
 
-//        ViewTreeObserver vto = event_layout.getViewTreeObserver();
-//        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-//            @Override
-//            public boolean onPreDraw() {
-//                if (!hasMeasured) {
-//                    height = day[0].getMeasuredHeight();
-//                    per_height = height/24;
-//                    hasMeasured = true;
-//                    drawEvent();
-//                }
-//                return true;
-//            }
-//        });
+        ViewTreeObserver vto = event_layout.getViewTreeObserver();
+        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                if (!hasMeasured) {
+                    height = day[0].getMeasuredHeight();
+                    per_height = height/24;
+                    hasMeasured = true;
+                    drawEvent();
+                }
+                return true;
+            }
+        });
 
     }
 
@@ -98,17 +102,29 @@ public class day_new extends AppCompatActivity{
 
     private ArrayList<Event> list;
     private void drawEvent() {
-        eventService.findByTime(st);
-        Event event = new Event();
-        RelativeLayout event_layout = createEventLayout(event.getstarthour(), event.getendhour());
-        TextView class_text = createEventInfo(event.getthings()+"\n  ");
-        class_text.setGravity(Gravity.TOP | Gravity.LEFT);
-//        Button id_btn = createIdBtn(event.id);
-//        event_layout.addView(id_btn);
-        event_layout.addView(class_text);
-        day[0].addView(event_layout);
-
+        for (int i = 0; i < 1; i++) {
+            day[i].removeAllViews();
+        }
+        list=eventService.findAll(st);
+        if(!list.isEmpty())
+        {
+            for (Event cur: list) {
+                count++;
+                RelativeLayout class_layout = createEventLayout(cur.getstarthour(), cur.getendhour()-cur.getstarthour());
+                TextView class_text = createEventInfo(cur.getthings()+"\n ");
+                class_text.setGravity(Gravity.CENTER | Gravity.CENTER);
+                ShowEventActivity sea=new ShowEventActivity();
+                Button id_btn = createIdBtn(cur.id);
+                Toast.makeText(day_new.this, "click week："+cur.id, Toast.LENGTH_SHORT).show();
+                sea.id=cur.id;
+                class_layout.addView(id_btn);
+                class_layout.addView(class_text);
+                day[0].addView(class_layout);
+            }
+        }
     }
+
+
 
     private RelativeLayout createEventLayout(int start, int length) {
         RelativeLayout layout = new RelativeLayout(getBaseContext());
@@ -132,24 +148,25 @@ public class day_new extends AppCompatActivity{
         return layout;
     }
 
-//    private Button createIdBtn(final int id) {
-////        Button btn = new Button(getBaseContext());
-////        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-////        btn.setText(String.valueOf(id));
-////        btn.setAlpha(0);
-////        btn.setLayoutParams(params);
-////        btn.setOnClickListener(new View.OnClickListener() {
-////            @Override
-////            public void onClick(View view) {
-////                Intent intent = new Intent();
-////                intent.putExtra("id", id);
-////                intent.setClass(getBaseContext(), ShowClassActivity.class);
-////                startActivityForResult(intent, SHOW_CLASS_CODE);
-////                overridePendingTransition(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_top);
-////            }
-////        });
-////        return btn;
-//    }
+    private Button createIdBtn(final String id) {
+        Button btn = new Button(getBaseContext());
+        ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        btn.setText(String.valueOf(id));
+        btn.setAlpha(0);
+        btn.setLayoutParams(params);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.putExtra("id", id);
+                intent.setClass(getBaseContext(), ShowEventActivity.class);
+                list=eventService.findById(id);
+                startActivityForResult(intent, SHOW_CLASS_CODE);
+                overridePendingTransition(R.anim.abc_slide_in_bottom, R.anim.abc_slide_out_top);
+            }
+        });
+        return btn;
+    }
 
     private TextView createEventInfo(String string) {
         TextView textView = new TextView(getBaseContext());

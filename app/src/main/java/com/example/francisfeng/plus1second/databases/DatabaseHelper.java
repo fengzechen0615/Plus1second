@@ -5,8 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Created by stiles on 16/4/12.
+ * Created by francisfeng on 31/05/2017.
  */
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     public final static String DATABASENAME = "schedule.db";
     public final static String TABLENAME = "class";
@@ -18,14 +19,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public final static String START = "start";
     public final static String LENGTH = "length";
 
-//    public final static String TABLENAME1 = "event";
-//    public final static String ID1 = "id";
-//    public final static String DATE="date";
-//    public final static String THINGS = "things";
-//    public final static String START_HOUR = "start_hour";
-//    public final static String START_MINU = "start_minu";
-//    public final static String END_HOUR = "end_hour";
-//    public final static String END_MINU = "end_minu";
+    public final static String TABLENAME2 = "event";
+    public final static String ID1 = "id";
+    public final static String DATE="date";
+    public final static String THINGS = "things";
+    public final static String START_HOUR = "start_hour";
+    public final static String START_MINU = "start_minu";
+    public final static String END_HOUR = "end_hour";
+    public final static String END_MINU = "end_minu";
 
 
     public final static int VERSION = 1;
@@ -46,15 +47,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 LENGTH + " integer);";
         sqLiteDatabase.execSQL(sql);
 
-//        sql = "create table if not exists " + TABLENAME1 + " (" +
-//                ID1 + " text primary key autoincrement, " +
-//                DATE + " text, " +
-//                THINGS + " text, " +
-//                START_HOUR + " integer, " +
-//                START_MINU + " integer, " +
-//                END_HOUR + "integer, " +
-//                END_MINU + "integer)";
-//        sqLiteDatabase.execSQL(sql);
+        String sql2 = "create table if not exists " + TABLENAME2 + " (" +
+                ID1 + " text primary key, " +
+                DATE + " text, " +
+                THINGS + " text, " +
+                START_HOUR + " integer, " +
+                START_MINU + " integer, " +
+                END_HOUR + " integer, " +
+                END_MINU + " integer);";
+        sqLiteDatabase.execSQL(sql2);
+
     }
 
     @Override

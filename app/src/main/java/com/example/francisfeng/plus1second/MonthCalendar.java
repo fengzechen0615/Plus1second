@@ -34,49 +34,40 @@ public class MonthCalendar extends View{
 
     private String TAG = "MonthCalendar";
 
-    /** 各部分背景*/
     private int mBgMonth, mBgWeek, mBgDay, mBgPre;
-    /** 标题的颜色、大小*/
     private int mTextColorMonth;
     private float mTextSizeMonth;
     private int mMonthRowL, mMonthRowR;
     private float mMonthRowSpac;
     private float mMonthSpac;
-    /** 星期的颜色、大小*/
     private int mTextColorWeek;
     private float mTextSizeWeek;
-    /** 日期文本的颜色、大小*/
     private int mTextColorDay;
     private float mTextSizeDay;
-    /** 任务次数文本的颜色、大小*/
     private int mTextColorPreFinish, mTextColorPreUnFinish;
     private float mTextSizePre;
-    /** 选中的文本的颜色*/
     private int mSelectTextColor;
-    /** 选中背景*/
     private int mSelectBg, mCurrentBg;
     private float mSelectRadius, mCurrentBgStrokeWidth;
     private float[] mCurrentBgDashPath;
 
-    /** 行间距*/
     private float mLineSpac;
-    /** 字体上下间距*/
     private float mTextSpac;
 
     private Paint mPaint;
     private Paint bgPaint;
 
     private float titleHeight, weekHeight, dayHeight, preHeight, oneHeight;
-    private int columnWidth;       //每列宽度
+    private int columnWidth;
 
-    private Date month; //当前的月份
-    private boolean isCurrentMonth;       //展示的月份是否是当前月
-    private int currentDay, selectDay, lastSelectDay;    //当前日期 、 选中的日期 、上一次选中的日期（避免造成重复回调请求）
+    private Date month;
+    private boolean isCurrentMonth;
+    private int currentDay, selectDay, lastSelectDay;
 
-    private int dayOfMonth;   //月份天数
-    private int firstIndex;   //当月第一天位置索引
-    private int firstLineNum, lastLineNum; //第一行、最后一行能展示多少日期
-    private int lineNum;      //日期行数
+    private int dayOfMonth;
+    private int firstIndex;
+    private int firstLineNum, lastLineNum;
+    private int lineNum;
     private String[] WEEK_STR = new String[]{"Sun", "Mon", "Tues", "Wed", "Thur", "Fri", "Sat", };
 
 
@@ -127,7 +118,7 @@ public class MonthCalendar extends View{
         mCurrentBgStrokeWidth = a.getDimension(R.styleable.MonthCalendar_mCurrentBgStrokeWidth, 5);
         mLineSpac = a.getDimension(R.styleable.MonthCalendar_mLineSpac, 20);
         mTextSpac = a.getDimension(R.styleable.MonthCalendar_mTextSpac, 20);
-        a.recycle();  //注意回收
+        a.recycle();
 
         initCompute();
 
@@ -141,41 +132,32 @@ public class MonthCalendar extends View{
 
         map = new HashMap<>();
 
-        //标题高度
         mPaint.setTextSize(mTextSizeMonth);
         titleHeight = FontUtil.getFontHeight(mPaint) + 2 * mMonthSpac;
-        //星期高度
         mPaint.setTextSize(mTextSizeWeek);
         weekHeight = FontUtil.getFontHeight(mPaint);
-        //日期高度
         mPaint.setTextSize(mTextSizeDay);
         dayHeight = FontUtil.getFontHeight(mPaint);
-        //次数字体高度
         mPaint.setTextSize(mTextSizePre);
         preHeight = FontUtil.getFontHeight(mPaint);
-        //每行高度 = 行间距 + 日期字体高度 + 字间距 + 次数字体高度
         oneHeight = mLineSpac + dayHeight + mTextSpac + preHeight;
 
-        //默认当前月份
         String cDateStr = getMonthStr(new Date());
         setMonth(cDateStr);
     }
 
-    /**设置月份*/
     private void setMonth(String Month){
 
         month = str2Date(Month);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        //获取今天是多少号
         currentDay = calendar.get(Calendar.DAY_OF_MONTH);
 
         Date cM = str2Date(getMonthStr(new Date()));
-        //判断是否为当月
         if(cM.getTime() == month.getTime()){
             isCurrentMonth = true;
-            selectDay = currentDay;//当月默认选中当前日
+            selectDay = currentDay;
         }else{
             isCurrentMonth = false;
             selectDay = 0;
@@ -183,10 +165,8 @@ public class MonthCalendar extends View{
         Log.d(TAG, "设置月份："+month+"   今天"+currentDay+"号, 是否为当前月："+isCurrentMonth);
         calendar.setTime(month);
         dayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-        //第一行1号显示在什么位置（星期几）
         firstIndex = calendar.get(Calendar.DAY_OF_WEEK)-1;
         lineNum = 1;
-        //第一行能展示的天数
         firstLineNum = 7-firstIndex;
         lastLineNum = 0;
         int shengyu = dayOfMonth - firstLineNum;
@@ -204,10 +184,8 @@ public class MonthCalendar extends View{
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        //宽度 = 填充父窗体
-        int widthSize = MeasureSpec.getSize(widthMeasureSpec);   //获取宽的尺寸
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
         columnWidth = widthSize / 7;
-        //高度 = 标题高度 + 星期高度 + 日期行数*每行高度
         float height = titleHeight + weekHeight + ((lineNum+1) * oneHeight);
         Log.v(TAG, "标题高度："+titleHeight+" 星期高度："+weekHeight+" 每行高度："+oneHeight+
                 " 行数："+ lineNum + "  \n控件高度："+height);
@@ -223,38 +201,30 @@ public class MonthCalendar extends View{
         drawDayAndPre(canvas);
     }
 
-    /**绘制月份*/
     private int rowLStart, rowRStart, rowWidth;
     private void drawMonth(Canvas canvas){
-        //背景
         bgPaint.setColor(mBgMonth);
         RectF rect = new RectF(0, 0, getWidth(), titleHeight);
         canvas.drawRect(rect, bgPaint);
-        //绘制月份
         mPaint.setTextSize(mTextSizeMonth);
         mPaint.setColor(mTextColorMonth);
         float textLen = FontUtil.getFontlength(mPaint, getMonthStr(month));
         float textStart = (getWidth() - textLen)/ 2;
         canvas.drawText(getMonthStr(month), textStart,
                 mMonthSpac+ FontUtil.getFontLeading(mPaint), mPaint);
-        /*绘制左右箭头*/
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), mMonthRowL);
         int h = bitmap.getHeight();
         rowWidth = bitmap.getWidth();
-        //float left, float top
         rowLStart = (int)(textStart-2*mMonthRowSpac-rowWidth);
         canvas.drawBitmap(bitmap, rowLStart+mMonthRowSpac , (titleHeight - h)/2, new Paint());
         bitmap = BitmapFactory.decodeResource(getResources(), mMonthRowR);
         rowRStart = (int)(textStart+textLen);
         canvas.drawBitmap(bitmap, rowRStart+mMonthRowSpac, (titleHeight - h)/2, new Paint());
     }
-    /**绘制绘制星期*/
     private void drawWeek(Canvas canvas){
-        //背景
         bgPaint.setColor(mBgWeek);
         RectF rect = new RectF(0, titleHeight, getWidth(), titleHeight + weekHeight);
         canvas.drawRect(rect, bgPaint);
-        //绘制星期：七天
         mPaint.setTextSize(mTextSizeWeek);
         mPaint.setColor(mTextColorWeek);
         for(int i = 0; i < WEEK_STR.length; i++){
@@ -263,21 +233,15 @@ public class MonthCalendar extends View{
             canvas.drawText(WEEK_STR[i], x, titleHeight + FontUtil.getFontLeading(mPaint), mPaint);
         }
     }
-    /**绘制日期和次数*/
     private void drawDayAndPre(Canvas canvas){
-        //某行开始绘制的Y坐标，第一行开始的坐标为标题高度+星期部分高度
         float top = titleHeight+weekHeight;
-        //行
         for(int line = 0; line <lineNum; line++){
             if(line == 0){
-                //第一行
                 drawDayAndPre(canvas, top, firstLineNum, 0, firstIndex);
             }else if(line == lineNum-1){
-                //最后一行
                 top += oneHeight;
                 drawDayAndPre(canvas, top, lastLineNum, firstLineNum+(line-1)*7, 0);
             }else{
-                //满行
                 top += oneHeight;
                 drawDayAndPre(canvas, top, 7, firstLineNum+(line-1)*7, 0);
             }
@@ -340,12 +304,10 @@ public class MonthCalendar extends View{
             int x = left + (columnWidth - len)/2;
             canvas.drawText(day+"", x, top + mLineSpac + dayTextLeading, mPaint);
 
-            //绘制次数
             mPaint.setTextSize(mTextSizePre);
             Month.DayFinish finish = map.get(day);
-            String preStr = "0";
+            String preStr = "";
             if(finish!=null){
-                //区分完成未完成
                 if(finish.all < 3) {
                     mPaint.setColor(mTextColorPreFinish);
                 }else{
@@ -362,7 +324,6 @@ public class MonthCalendar extends View{
         }
     }
 
-    /**获取月份标题*/
     private String getMonthStr(Date month){
         SimpleDateFormat df = new SimpleDateFormat("yyyy/MM");
         return df.format(month);
@@ -377,10 +338,6 @@ public class MonthCalendar extends View{
         }
     }
 
-
-
-    /****************************事件处理↓↓↓↓↓↓↓****************************/
-    //焦点坐标
     private PointF focusPoint = new PointF();
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -404,12 +361,9 @@ public class MonthCalendar extends View{
         return true;
     }
 
-    /**焦点滑动*/
     public void touchFocusMove(final PointF point, boolean eventEnd) {
         Log.e(TAG, "点击坐标：("+point.x+" ，"+point.y+"),事件是否结束："+eventEnd);
-        /**标题和星期只有在事件结束后才响应*/
         if(point.y<=titleHeight){
-            //事件在标题上
             if(eventEnd && listener!=null){
                 if(point.x>=rowLStart && point.x<(rowLStart+2*mMonthRowSpac+rowWidth)){
                     Log.w(TAG, "点击左箭头");
@@ -422,9 +376,7 @@ public class MonthCalendar extends View{
                 }
             }
         }else if(point.y<=(titleHeight+weekHeight)){
-            //事件在星期部分
             if(eventEnd && listener!=null){
-                //根据X坐标找到具体的焦点日期
                 int xIndex = (int)point.x / columnWidth;
                 Log.e(TAG, "列宽："+columnWidth+"  x坐标余数："+(point.x / columnWidth));
                 if((point.x / columnWidth-xIndex)>0){
@@ -435,18 +387,13 @@ public class MonthCalendar extends View{
                 }
             }
         }else{
-            /**日期部分按下和滑动时重绘，只有在事件结束后才响应*/
             touchDay(point, eventEnd);
         }
     }
 
-    //控制事件是否响应
     private boolean responseWhenEnd = false;
-    /**事件点在 日期区域 范围内*/
     private void touchDay(final PointF point, boolean eventEnd){
-        //根据Y坐标找到焦点行
-        boolean availability = false;  //事件是否有效
-        //日期部分
+        boolean availability = false;
         float top = titleHeight+weekHeight+oneHeight;
         int foucsLine = 1;
         while(foucsLine<=lineNum){
@@ -458,19 +405,17 @@ public class MonthCalendar extends View{
             foucsLine ++;
         }
         if(availability){
-            //根据X坐标找到具体的焦点日期
             int xIndex = (int)point.x / columnWidth;
             if((point.x / columnWidth-xIndex)>0){
                 xIndex += 1;
             }
 //            Log.e(TAG, "列宽："+columnWidth+"  x坐标余数："+(point.x / columnWidth));
             if(xIndex<=0)
-                xIndex = 1;   //避免调到上一行最后一个日期
+                xIndex = 1;
             if(xIndex>7)
-                xIndex = 7;   //避免调到下一行第一个日期
+                xIndex = 7;
 //            Log.e(TAG, "事件在日期部分，第"+foucsLine+"/"+lineNum+"行, "+xIndex+"列");
             if(foucsLine == 1){
-                //第一行
                 if(xIndex<=firstIndex){
                     Log.e(TAG, "点到开始空位了");
                     setSelectedDay(selectDay, true);
@@ -478,7 +423,6 @@ public class MonthCalendar extends View{
                     setSelectedDay(xIndex-firstIndex, eventEnd);
                 }
             }else if(foucsLine == lineNum){
-                //最后一行
                 if(xIndex>lastLineNum){
                     Log.e(TAG, "点到结尾空位了");
                     setSelectedDay(selectDay, true);
@@ -489,11 +433,9 @@ public class MonthCalendar extends View{
                 setSelectedDay(firstLineNum + (foucsLine-2)*7+ xIndex, eventEnd);
             }
         }else{
-            //超出日期区域后，视为事件结束，响应最后一个选择日期的回调
             setSelectedDay(selectDay, true);
         }
     }
-    /**设置选中的日期*/
     private void setSelectedDay(int day, boolean eventEnd){
         Log.w(TAG, "选中："+day+"  事件是否结束"+eventEnd);
         selectDay = day;
@@ -505,12 +447,6 @@ public class MonthCalendar extends View{
         responseWhenEnd = !eventEnd;
     }
 
-    /****************************事件处理↑↑↑↑↑↑↑****************************/
-
-
-
-
-    /***********************接口API↓↓↓↓↓↓↓**************************/
     private Map<Integer, Month.DayFinish> map;
     public void setRenwu(String month, List<Month.DayFinish> list){
         setMonth(month);
@@ -532,7 +468,6 @@ public class MonthCalendar extends View{
         }
         invalidate();
     }
-    /**月份增减*/
     public void monthChange(int change){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(month);
@@ -554,9 +489,6 @@ public class MonthCalendar extends View{
         public abstract void onWeekClick(int weekIndex, String weekStr);
         public abstract void onDayClick(int day, String dayStr, Month.DayFinish finish);
     }
-
-
-    /***********************接口API↑↑↑↑↑↑↑**************************/
 
 }
 

@@ -10,10 +10,11 @@ import android.widget.TextView;
 import com.example.francisfeng.plus1second_test.R;
 
 /**
- * Created by stiles on 16/4/15.
+ * Created by francisfeng on 31/05/2017.
  */
+
 public class ShowClassActivity extends Activity {
-    private static final String[] weeks = {"星期一", "星期二", "星期三", "星期四", "星期五", "星期六", "星期日"};
+    private static final String[] weeks = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
     private int id;
     private ClassService classService;
 
@@ -30,16 +31,16 @@ public class ShowClassActivity extends Activity {
         TextView show_place = (TextView) findViewById(R.id.show_place);
         TextView show_time = (TextView) findViewById(R.id.show_time);
         Class c = classService.findById(id);
-        show_class_name.setText("课程名称: " + c.getClass_name());
-        show_teacher_name.setText("任课教师: " + c.getTeacher_name());
-        show_place.setText("课程地点: " + c.getClassroom());
-        String time = "课程时间:\n\n";
-        time += weeks[c.getWeek()]+" "+"第";
+        show_class_name.setText("Course Name: " + c.getClass_name());
+        show_teacher_name.setText("Teacher: " + c.getTeacher_name());
+        show_place.setText("Classroom: " + c.getClassroom());
+        String time = "Course Time:\n\n";
+        time += weeks[c.getWeek()]+" "+"No.";
         int cur = c.getStart()+1;
-        for (int i = 0; i < c.getLength(); i++, cur++) {
+        for (int i = 0; i < c.getLength() - c.getStart() + 1; i++, cur++) {
             time += " " + cur;
         }
-        time += "节";
+        time += "Lesson";
         show_time.setText(time);
 
         del_btn.setOnClickListener(new View.OnClickListener() {

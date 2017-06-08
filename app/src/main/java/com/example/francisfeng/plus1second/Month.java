@@ -15,6 +15,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Created by francisfeng on 31/05/2017.
+ */
+
 public class Month extends AppCompatActivity {
 
     private MonthCalendar cal;
@@ -29,39 +33,7 @@ public class Month extends AppCompatActivity {
 
         cal = (MonthCalendar)findViewById(R.id.cal);
 
-        //TODO 模拟请求当月数据
         final List<DayFinish> list = new ArrayList<>();
-//        list.add(new DayFinish(1,2,2));
-//        list.add(new DayFinish(2,1,2));
-//        list.add(new DayFinish(3,0,2));
-//        list.add(new DayFinish(4,2,2));
-//        list.add(new DayFinish(5,2,2));
-//        list.add(new DayFinish(6,2,2));
-//        list.add(new DayFinish(7,2,2));
-//        list.add(new DayFinish(8,0,2));
-//        list.add(new DayFinish(9,1,2));
-//        list.add(new DayFinish(10,2,2));
-//        list.add(new DayFinish(11,5,2));
-//        list.add(new DayFinish(12,2,2));
-//        list.add(new DayFinish(13,2,2));
-//        list.add(new DayFinish(14,3,2));
-//        list.add(new DayFinish(15,2,2));
-//        list.add(new DayFinish(16,1,2));
-//        list.add(new DayFinish(17,0,2));
-//        list.add(new DayFinish(18,2,2));
-//        list.add(new DayFinish(19,2,2));
-//        list.add(new DayFinish(20,0,2));
-//        list.add(new DayFinish(21,2,2));
-//        list.add(new DayFinish(22,1,2));
-//        list.add(new DayFinish(23,2,0));
-//        list.add(new DayFinish(24,0,2));
-//        list.add(new DayFinish(25,2,2));
-//        list.add(new DayFinish(26,2,2));
-//        list.add(new DayFinish(27,2,2));
-//        list.add(new DayFinish(28,2,2));
-//        list.add(new DayFinish(29,2,2));
-//        list.add(new DayFinish(30,2,2));
-//        list.add(new DayFinish(31,2,2));
 
         cal.setOnClickListener(new MonthCalendar.onClickListener() {
             @Override

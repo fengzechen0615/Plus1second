@@ -76,7 +76,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="5dp"
             android:background="@drawable/btn_delete"
-            android:text="删     除"
+            android:text="Delete"
             android:textColor="#ffffff"
             android:textSize="20sp" />
 

@@ -1,8 +1,9 @@
 package com.example.francisfeng.plus1second;
 
 /**
- * Created by stiles on 16/4/13.
+ * Created by francisfeng on 31/05/2017.
  */
+
 public class Class {
     public int id;
     private String class_name;

@@ -19,6 +19,10 @@ import com.example.francisfeng.plus1second_test.R;
 
 import java.util.ArrayList;
 
+/**
+ * Created by francisfeng on 31/05/2017.
+ */
+
 public class Schedule extends AppCompatActivity {
 
     private static final int ADD_CLASS_CODE = 1;
@@ -68,14 +72,10 @@ public class Schedule extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.exit) {
             finish();
             return true;
         } else if (id == R.id.add) {
-//            Intent intent = new Intent(Schedule.this, AddClass.class);
-//            startActivity(intent);
             Intent intent = new Intent();
             intent.setClass(getBaseContext(), AddClass.class);
             startActivityForResult(intent, ADD_CLASS_CODE);

@@ -20,6 +20,7 @@
         <activity android:name="com.example.francisfeng.plus1second.ShowClassActivity"></activity>
         <activity android:name="com.example.francisfeng.plus1second.day_new"></activity>
         <activity android:name="com.example.francisfeng.plus1second.AddEvent"></activity>
+        <activity android:name="com.example.francisfeng.plus1second.ShowEventActivity"></activity>
     </application>
 
 </manifest>
