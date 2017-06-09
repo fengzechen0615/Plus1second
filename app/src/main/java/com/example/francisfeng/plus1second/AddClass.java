@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class AddClass extends Activity {
     private LinearLayout container;
-    private static final String[] weeks = {"Monday", "Tuesday", "Wednesday", "Thursday", "Fridya", "Saturday", "Sunday"};
+    private static final String[] weeks = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
     private static final String[] start = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
     private static final String[] length = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
     private ArrayList<LinearLayout> list;
